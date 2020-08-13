@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_content %}
+    <title>@{{ request.user.username }} | Update profile</title>
+{% endblock %}
+
+{% block container %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-6 p-4" id="profile-box">
+                <form method="POST" action="{% url 'users:update' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+
+            {% comment %} Picture Field {% endcomment %}
+                    <div class='media mb-2'>
+                        {% if profile.picture %}
+                            <img src="{{ profile.picture.url }}" class="rounded-circle" height="70" width="70"/>
+                        {% else %}
+                            <img src="{% static 'img/default-profile.png' %}" class="rounded-circle" height="70" />
+                        {% endif %}
+                            <div class="media-body">
+                                <h5 class="ml-4 mt-2">@{{ user.username }} | {{user.get_full_name}}</h5>
+                                <input 
+                                    class="form-control-file ml-4 mt-2" 
+                                    type="file"
+                                    name="picture"
+                                    placeholder="Picture"
+                                    value="{{ profile.picture }}"
+                                    />
+                            </div>
+                    </div>
+                    {% for error in form.picture.errors %}
+                        <div class="alert alert-danger">
+                            <b>Picture: </b>{{error}}
+                        </div> 
+                    {% endfor %}
+                    <hr><br>
+
+            {% comment %} Website field {% endcomment %}
+                    <div class="form-group">
+                        <label>Website</label>
+                        <input 
+                            class="form-control {% if form.website.errors %} is-invalid {% endif %}"
+                            type="text"
+                            name="website"
+                            placeholder="Website"
+                            value="{% if form.errors %}{{ form.website.value }}{% else %}{{ profile.website }}{% endif %}"
+                        />
+                        <div class="invalid-feedback">
+                        {% for error in form.website.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    </div>
+                    
+
+            {% comment %} Biography field {% endcomment %}
+                    <div class="form-group">
+                        <label>Biography</label>
+                        <textarea 
+                            class="form-control {% if form.biography.errors %} is-invalid {% endif %}"
+                            name="biography">
+                            {% if form.errors %} {{ form.biography.value }} {% else %} {{ profile.biography }} {% endif %}
+                        </textarea>
+                        <div class="invalid-feedback">
+                            {% for error in form.biography.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+            {% comment %} Phone number field {% endcomment %}
+                    <div class="form-group">
+                        <label>Phone number</label>
+                        <input
+                            class="form-control {% if form.phone_number.errors %} is-invalid {% endif %}"
+                            type="text"
+                            name="phone_number"
+                            placeholder="Phone number"
+                            value="{% if form.errors %}{{ form.phone_number.value }}{% else %}{{ profile.phone_number }}{% endif %}"
+                        />
+                        <div class="invalid-feedback">
+                        {% for error in form.biography.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block mt-5">Update info</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
