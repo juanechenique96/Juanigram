@@ -32,13 +32,16 @@
                         {% endif %}
                             <div class="media-body">
                                 <h5 class="ml-4 mt-2">@{{ user.username }} | {{user.get_full_name}}</h5>
-                                <input 
-                                    class="form-control-file ml-4 mt-2" 
-                                    type="file"
-                                    name="picture"
-                                    placeholder="Picture"
-                                    value="{{ profile.picture }}"
-                                    />
+                                <div class="custom-file col-8 ml-4">
+                                    <input 
+                                        class="custom-file-input ml-4 mt-2" 
+                                        type="file"
+                                        name="picture"
+                                        placeholder="Picture"
+                                        value="{{ profile.picture }}"
+                                        />
+                                    <label class="custom-file-label">Choose your photo</label>
+                                </div>
                             </div>
                     </div>
                     {% for error in form.picture.errors %}

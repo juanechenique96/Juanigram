@@ -31,14 +31,16 @@
 
                     {# Photo field #}
                     <div class="form-group">
-                        <label>Choose your photo:</label>
-                        <input
-                            class="form-control {% if form.photo.errors %}is-invalid{% endif %}"
-                            type="file"
-                            name="photo"
-                            placeholder="photo"
-                            value="{% if form.errors %}{{form.photo.value}}{% else %}{{profile.photo}}{% endif %}"
-                        >
+                        <div class="custom-file">
+                            <input
+                                class="custom-file-input {% if form.photo.errors %}is-invalid{% endif %}"
+                                type="file"
+                                name="photo"
+                                placeholder="photo"
+                                value="{% if form.errors %}{{form.photo.value}}{% else %}{{profile.photo}}{% endif %}"
+                            >
+                            <label class="custom-file-label">Choose your photo</label>
+                        </div>
                         <div class="invalid-feedback">
                             {% for error in form.photo.errors %}{{ error }}{% endfor %}
                         </div>
