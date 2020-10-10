@@ -12,6 +12,7 @@ Para usar esta aplicacion lo unico que debes hacer es clonar este repositorio:
 Para usar esta app se requiere lo siguiente:
 Django==3.1
 django-bootstrap4==2.2.0
+pillow==7.2.0
 python == 3.8.4
 
 ## Ejecutando las pruebas ⚙️
